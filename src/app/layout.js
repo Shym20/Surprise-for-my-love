@@ -1,7 +1,7 @@
 // "use client";
 import { Geist, Geist_Mono, Poppins, Noto_Serif } from "next/font/google";
-import "./globals.css"; // Your global Tailwind CSS file
-import "./globals.css"; // Global styles
+import "./globals.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
