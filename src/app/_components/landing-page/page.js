@@ -19,7 +19,14 @@ import {
   Cake,
   Quote,
   Clock,
-  PartyPopper
+  PartyPopper,
+  X,
+  Maximize2,
+  Eye,
+  RotateCw,
+  Filter,
+  ChevronLeft,
+  Send
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -28,9 +35,29 @@ export default function SurpriseBase() {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState(false);
 
+  // Gallery Interaction States
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [flippedCards, setFlippedCards] = useState({});
+  const [likesCount, setLikesCount] = useState({});
+  const [activeModalItem, setActiveModalItem] = useState(null);
+
+  const toggleFlip = (id, e) => {
+    if (e) e.stopPropagation();
+    setFlippedCards((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleLike = (id, e) => {
+    if (e) e.stopPropagation();
+    setLikesCount((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 0) + 1
+    }));
+    triggerConfetti();
+  };
+
   // Background Slideshow state
   const [bgIndex, setBgIndex] = useState(0);
-  const bgImages = ["/images/bg1.jpg", "/images/bg2.jpg", "/images/bg3.jpg"];
+  const bgImages = ["/prii1.png", "/prii2.png", "/prii3.png", "/prii4.png"];
 
   // Passcode default
   const SECRET_PASSCODE = "1820"
@@ -122,6 +149,98 @@ export default function SurpriseBase() {
     },
   ];
 
+  // Couple Memories Gallery Data
+  const coupleMemories = [
+    {
+      id: 1,
+      image: "/couple1.png",
+      title: "First Golden Sunset 🌅",
+      category: "Sweet Dates",
+      tag: "Magic Hour",
+      date: "October 14",
+      note: "The way the golden sunset light hit your beautiful smile made time stand completely still. My favorite memory of us.",
+      location: "Sunset Point",
+      hearts: 142
+    },
+    {
+      id: 2,
+      image: "/couple2.png",
+      title: "Cozy Coffee & Laughs ☕",
+      category: "Sweet Dates",
+      tag: "Everyday Magic",
+      date: "November 02",
+      note: "Holding hands over warm coffee while laughing uncontrollably at inside jokes. Hours felt like just seconds with you.",
+      location: "Our Favorite Café",
+      hearts: 189
+    },
+    {
+      id: 3,
+      image: "/couple3.png",
+      title: "Weekend Escape 🌄",
+      category: "Adventures",
+      tag: "Road Trip",
+      date: "December 18",
+      note: "Exploring scenic mountain paths together. Walking side by side with you made every single view ten times more magical.",
+      location: "Mountain Pines",
+      hearts: 210
+    },
+    {
+      id: 4,
+      image: "/couple4.png",
+      title: "Starlight Romance ✨",
+      category: "Romantic Nights",
+      tag: "Midnight Magic",
+      date: "January 05",
+      note: "Underneath a sky full of glittering stars, whispering sweet promises and holding you close against the midnight chill.",
+      location: "Stargazing Hill",
+      hearts: 256
+    },
+    {
+      id: 5,
+      image: "/couple5.png",
+      title: "Seaside Breeze 🌊",
+      category: "Adventures",
+      tag: "Ocean Vibe",
+      date: "February 22",
+      note: "Listening to ocean waves crashing against the shore while soft winds blew across your face. Pure serenity and love.",
+      location: "Golden Beach",
+      hearts: 198
+    },
+    {
+      id: 6,
+      image: "/couple6.png",
+      title: "Fairytale Celebration 🎉",
+      category: "Forever Love",
+      tag: "Celebration",
+      date: "March 11",
+      note: "Surrounded by festive lights, music, and joy. Seeing your eyes sparkle with happiness filled my entire heart with bliss.",
+      location: "City Lights Festival",
+      hearts: 312
+    },
+    {
+      id: 7,
+      image: "/couple7.png",
+      title: "Rainy Day Hugs 🌧️",
+      category: "Sweet Dates",
+      tag: "Cozy Moments",
+      date: "April 09",
+      note: "Wrapped in cozy blankets listening to raindrops on the window, feeling so incredibly safe and loved in your arms.",
+      location: "Home Sweet Home",
+      hearts: 275
+    },
+    {
+      id: 8,
+      image: "/couple8.png",
+      title: "Forever & Always 💖",
+      category: "Forever Love",
+      tag: "Endless Journey",
+      date: "Forever",
+      note: "Looking into your eyes and knowing without a single shadow of a doubt that you are my soulmate and my forever choice.",
+      location: "Right Beside You",
+      hearts: 480
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-slate-950 text-rose-50 flex flex-col items-center justify-start relative overflow-x-hidden font-sans">
       {/* Dynamic Background Image Carousel with Dark Romantic Gradient Overlay */}
@@ -205,9 +324,8 @@ export default function SurpriseBase() {
                       placeholder="Passcode (Default: 1234 or 'love')"
                       value={passcode}
                       onChange={(e) => setPasscode(e.target.value)}
-                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${
-                        error ? "border-red-500 animate-pulse" : "border-rose-500/30"
-                      } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
+                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${error ? "border-red-500 animate-pulse" : "border-rose-500/30"
+                        } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
                     />
                     {error && (
                       <p className="text-red-400 text-xs mt-2 font-medium">
@@ -259,7 +377,7 @@ export default function SurpriseBase() {
                     onClick={triggerConfetti}
                     className="px-6 py-2.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-200 hover:bg-rose-500/30 text-xs sm:text-sm font-medium transition-all inline-flex items-center gap-2"
                   >
-                    <Sparkles size={16} /> Shower Birthday Confetti 🎉
+                    <Sparkles size={16} /> Click Me to Shower Birthday Confetti 🎉
                   </button>
                 </div>
               </div>
@@ -275,7 +393,7 @@ export default function SurpriseBase() {
                       "You are my sun, my moon, and all my stars."
                     </h2>
                     <p className="text-rose-200/90 text-sm sm:text-base leading-relaxed">
-                      Happy Birthday! Having you in my life is the greatest blessing I could ever ask for. Your kindness, your gentle laughter, and the way you bring light into every room make me fall in love with you more every single day.
+                      Happy Birthday Priiiiiiiiiii ! Having you in my life is the greatest blessing I could ever ask for. Your kindness, your gentle laughter, and the way you bring light into every room make me fall in love with you more every single day.
                     </p>
                     <p className="text-rose-200/80 text-sm sm:text-base leading-relaxed">
                       I built this personal website just for you to remind you how deeply loved, appreciated, and cherished you truly are—not just today on your birthday, but forever.
@@ -296,7 +414,7 @@ export default function SurpriseBase() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
                       <div className="absolute bottom-4 left-4 right-4 text-center">
                         <span className="text-xs text-rose-200/90 bg-slate-900/80 px-3 py-1 rounded-full backdrop-blur-md border border-rose-400/30">
-                          ✨ Changing Memories automatically...
+                         HAPPY 22nd 🥂 
                         </span>
                       </div>
                     </motion.div>
@@ -359,6 +477,313 @@ export default function SurpriseBase() {
                   })}
                 </div>
               </section>
+
+              {/* NEW SECTION: OUR ROMANTIC GALLERY & MEMORY WALL */}
+              <section className="space-y-10">
+                <div className="text-center space-y-3">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-semibold uppercase tracking-widest"
+                  >
+                    <Camera size={15} /> Treasured Moments Wall <Camera size={15} />
+                  </motion.div>
+                  <h2 className="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-100 via-pink-200 to-amber-200">
+                    Our Romantic Memory Gallery
+                  </h2>
+                  <p className="text-rose-200/75 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Every picture tells a story of our love. Tap any photo to flip and read secret notes, or click to enlarge our special memories! 💖
+                  </p>
+
+                  {/* Category Filter Tabs */}
+                  <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+                    {["All", "Sweet Dates", "Adventures", "Romantic Nights", "Forever Love"].map((cat) => {
+                      const isActive = selectedCategory === cat;
+                      return (
+                        <button
+                          key={cat}
+                          onClick={() => setSelectedCategory(cat)}
+                          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 ${
+                            isActive
+                              ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 scale-105"
+                              : "bg-slate-900/60 hover:bg-slate-800 text-rose-200/80 border border-rose-500/20"
+                          }`}
+                        >
+                          {cat === "All" && <Sparkles size={14} />}
+                          {cat === "Sweet Dates" && <Smile size={14} />}
+                          {cat === "Adventures" && <Star size={14} />}
+                          {cat === "Romantic Nights" && <Heart size={14} />}
+                          {cat === "Forever Love" && <Gift size={14} />}
+                          {cat}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Polaroid Photo Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+                  {coupleMemories
+                    .filter((item) => selectedCategory === "All" || item.category === selectedCategory)
+                    .map((item, index) => {
+                      const isFlipped = !!flippedCards[item.id];
+                      const totalLikes = item.hearts + (likesCount[item.id] || 0);
+
+                      // Alternating rotational tilts for realistic polaroid wall feel
+                      const tiltClasses = [
+                        "hover:rotate-0 sm:rotate-1",
+                        "hover:rotate-0 sm:-rotate-2",
+                        "hover:rotate-0 sm:rotate-2",
+                        "hover:rotate-0 sm:-rotate-1",
+                      ];
+                      const tiltClass = tiltClasses[index % tiltClasses.length];
+
+                      return (
+                        <motion.div
+                          key={item.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, delay: (index % 4) * 0.1 }}
+                          className={`relative group perspective-1000 ${tiltClass} transition-all duration-300`}
+                        >
+                          <div
+                            className={`relative w-full h-[380px] rounded-3xl transition-transform duration-700 [transform-style:preserve-3d] ${
+                              isFlipped ? "[transform:rotateY(180deg)]" : ""
+                            }`}
+                          >
+                            {/* FRONT OF POLAROID CARD */}
+                            <div className="absolute inset-0 w-full h-full bg-slate-900/70 backdrop-blur-xl border border-rose-500/30 rounded-3xl p-3.5 flex flex-col justify-between shadow-2xl [backface-visibility:hidden] hover:border-rose-400/60 transition-all">
+                              {/* Photo Image Frame */}
+                              <div
+                                onClick={() => setActiveModalItem(item)}
+                                className="relative w-full h-56 rounded-2xl overflow-hidden cursor-pointer group/img border border-rose-500/20 bg-slate-950"
+                              >
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60 group-hover/img:opacity-40 transition-opacity" />
+
+                                {/* Category Tag */}
+                                <span className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-rose-400/30 text-rose-200 text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                  {item.tag}
+                                </span>
+
+                                {/* Zoom Hint Icon */}
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-slate-950/40 backdrop-blur-xs">
+                                  <span className="p-3 bg-rose-500/80 rounded-full text-white shadow-lg">
+                                    <Maximize2 size={18} />
+                                  </span>
+                                </div>
+
+                                {/* Like Heart Button (Top Right) */}
+                                <button
+                                  onClick={(e) => handleLike(item.id, e)}
+                                  className="absolute top-3 right-3 p-2 rounded-full bg-slate-950/70 backdrop-blur-md border border-rose-400/30 text-rose-400 hover:text-rose-300 hover:scale-125 transition-all flex items-center gap-1 text-xs"
+                                >
+                                  <Heart fill="currentColor" size={14} />
+                                  <span className="font-bold text-[11px] text-rose-100">
+                                    {totalLikes}
+                                  </span>
+                                </button>
+                              </div>
+
+                              {/* Card Info & Caption */}
+                              <div className="pt-2 px-1 flex flex-col justify-between flex-grow">
+                                <div className="flex items-center justify-between gap-1">
+                                  <h3 className="font-bold text-base text-rose-100 truncate">
+                                    {item.title}
+                                  </h3>
+                                  <span className="text-[11px] text-rose-300/60 font-mono">
+                                    {item.date}
+                                  </span>
+                                </div>
+
+                                <div className="flex items-center justify-between text-xs text-rose-200/70 pt-1">
+                                  <span className="flex items-center gap-1 text-rose-300/80">
+                                    <Clock size={12} /> {item.location}
+                                  </span>
+                                </div>
+
+                                {/* Flip Action Button */}
+                                <div className="pt-2 flex items-center gap-2">
+                                  <button
+                                    onClick={(e) => toggleFlip(item.id, e)}
+                                    className="w-full py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-400/30 text-rose-200 text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
+                                  >
+                                    <RotateCw size={13} /> Secret Love Note
+                                  </button>
+                                  <button
+                                    onClick={() => setActiveModalItem(item)}
+                                    className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-rose-500/20 text-rose-300 transition-all"
+                                    title="View Full Picture"
+                                  >
+                                    <Eye size={15} />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* BACK OF POLAROID CARD (REVEALS SECRET LOVE NOTE) */}
+                            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-rose-950/80 to-slate-950 backdrop-blur-2xl border border-rose-400/50 rounded-3xl p-5 flex flex-col justify-between shadow-2xl [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between border-b border-rose-500/20 pb-2">
+                                  <span className="text-xs uppercase tracking-widest text-pink-300 font-bold flex items-center gap-1">
+                                    <Quote size={14} /> Secret Note
+                                  </span>
+                                  <span className="text-[10px] text-rose-300/60 bg-rose-500/20 px-2 py-0.5 rounded-full border border-rose-400/30">
+                                    {item.date}
+                                  </span>
+                                </div>
+
+                                <p className="text-rose-100/90 italic font-serif text-sm leading-relaxed pt-2">
+                                  "{item.note}"
+                                </p>
+                              </div>
+
+                              <div className="space-y-3 pt-4 border-t border-rose-500/20">
+                                <div className="flex items-center justify-between text-xs text-rose-300/80">
+                                  <span>📍 {item.location}</span>
+                                  <span className="text-rose-400 font-semibold flex items-center gap-1">
+                                    <Heart size={12} fill="currentColor" /> {totalLikes} Loves
+                                  </span>
+                                </div>
+
+                                <button
+                                  onClick={(e) => toggleFlip(item.id, e)}
+                                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-rose-500/20 hover:scale-[1.02] transition-all"
+                                >
+                                  <RotateCw size={14} /> Flip Back To Photo
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                </div>
+              </section>
+
+              {/* LIGHTBOX MODAL FOR FULL SCREEN PHOTO MEMORY */}
+              <AnimatePresence>
+                {activeModalItem && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setActiveModalItem(null)}
+                    className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-4 sm:p-6 flex items-center justify-center overflow-y-auto"
+                  >
+                    <motion.div
+                      initial={{ scale: 0.9, y: 20 }}
+                      animate={{ scale: 1, y: 0 }}
+                      exit={{ scale: 0.9, y: 20 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="bg-slate-900/90 border border-rose-500/40 rounded-3xl overflow-hidden max-w-4xl w-full shadow-2xl grid grid-cols-1 md:grid-cols-12 relative"
+                    >
+                      {/* Close Button */}
+                      <button
+                        onClick={() => setActiveModalItem(null)}
+                        className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-slate-950/70 border border-rose-400/40 text-rose-200 hover:text-white hover:bg-rose-500 transition-all"
+                      >
+                        <X size={20} />
+                      </button>
+
+                      {/* Modal Image View */}
+                      <div className="md:col-span-7 bg-slate-950 relative min-h-[320px] sm:min-h-[420px] flex items-center justify-center overflow-hidden">
+                        <img
+                          src={activeModalItem.image}
+                          alt={activeModalItem.title}
+                          className="w-full h-full object-cover max-h-[500px]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-rose-200/90">
+                          <span className="bg-slate-900/80 px-3 py-1 rounded-full border border-rose-400/30">
+                            📍 {activeModalItem.location}
+                          </span>
+                          <span className="bg-rose-500/20 px-3 py-1 rounded-full border border-rose-400/30 text-rose-300">
+                            {activeModalItem.tag}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Modal Content Info */}
+                      <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                        <div className="space-y-4">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-semibold">
+                            <Calendar size={13} /> {activeModalItem.date}
+                          </div>
+
+                          <h2 className="text-2xl sm:text-3xl font-extrabold text-rose-100">
+                            {activeModalItem.title}
+                          </h2>
+
+                          <div className="p-4 rounded-2xl bg-slate-950/60 border border-rose-500/20 space-y-2">
+                            <span className="text-xs font-semibold text-rose-300 flex items-center gap-1">
+                              <Quote size={14} /> Personal Note:
+                            </span>
+                            <p className="text-rose-200/90 italic font-serif text-sm leading-relaxed">
+                              "{activeModalItem.note}"
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Modal Action Controls */}
+                        <div className="space-y-4 pt-2">
+                          <div className="flex items-center justify-between text-sm text-rose-200">
+                            <span>Total Love Reactions</span>
+                            <span className="font-bold text-rose-400 flex items-center gap-1 text-base">
+                              <Heart fill="currentColor" size={18} />{" "}
+                              {activeModalItem.hearts + (likesCount[activeModalItem.id] || 0)}
+                            </span>
+                          </div>
+
+                          <button
+                            onClick={() => handleLike(activeModalItem.id)}
+                            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                          >
+                            <Heart fill="currentColor" size={20} /> Send Love & Confetti 🎉
+                          </button>
+
+                          {/* Navigation between Modal items */}
+                          <div className="flex items-center justify-between pt-2">
+                            <button
+                              onClick={() => {
+                                const currentIndex = coupleMemories.findIndex(
+                                  (m) => m.id === activeModalItem.id
+                                );
+                                const prevIndex =
+                                  (currentIndex - 1 + coupleMemories.length) % coupleMemories.length;
+                                setActiveModalItem(coupleMemories[prevIndex]);
+                              }}
+                              className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                            >
+                              <ChevronLeft size={14} /> Previous Memory
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                const currentIndex = coupleMemories.findIndex(
+                                  (m) => m.id === activeModalItem.id
+                                );
+                                const nextIndex = (currentIndex + 1) % coupleMemories.length;
+                                setActiveModalItem(coupleMemories[nextIndex]);
+                              }}
+                              className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                            >
+                              Next Memory <ChevronRight size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* SECTION 3: REASONS WHY I LOVE YOU (Interactive Cards) */}
               <section className="space-y-8">
