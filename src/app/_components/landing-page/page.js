@@ -29,6 +29,7 @@ import {
   Send
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import VideoSection from "./VideoSection";
 
 export default function SurpriseBase() {
   const [unlocked, setUnlocked] = useState(false);
@@ -97,32 +98,32 @@ export default function SurpriseBase() {
   // Timeline Data
   const timelineEvents = [
     {
-      date: "The Day We Met",
-      title: "Where Magic Started ✨",
+      date: "2 May 2023",
+      title: "The Day We Met",
       description:
         "From the very first conversation, I knew you were someone extraordinarily special. You brought an unforgettable warmth into my life.",
       icon: Sparkles,
       tag: "Beginning",
     },
     {
-      date: "Our First Memory",
-      title: "Laughter & Late Night Talks 🌙",
+      date: "22 Jan 2023",
+      title: "The Day Fate Brought You Back",
       description:
-        "Hours felt like minutes whenever we spoke. Your smile instantly became my favorite view in the world.",
+        "After two years apart, your message appeared and somehow made everything feel right again. I don't know if it was fate, a second chance, or simply us finding our way back — I just know I was ready to choose you again.",
       icon: Calendar,
-      tag: "Special Moment",
+      tag: "God's Plan",
     },
     {
-      date: "Everyday Magic",
-      title: "Growing Stronger Together 💖",
-      description:
-        "Through every little moment, small adventures, and warm hugs, loving you has been the easiest and most beautiful choice.",
-      icon: Heart,
-      tag: "Forever Growing",
-    },
+  date: "20 Jun 2025",
+  title: "Our First Journey Together",
+  description:
+    "20 June 2025 — the day we began our first journey beyond Madhya Pradesh. Vrindavan, Barsana, Gokul and Mathura became more than just places on a map; they became beautiful chapters of our story, filled with laughter, memories, and moments I wish I could relive forever.",
+  icon: Heart,
+  tag: "A Journey to Remember",
+},
     {
       date: "Today",
-      title: "Happy Birthday My Love! 🎂",
+      title: "Happy Birthday My Girl! 🎂",
       description:
         "Today is entirely dedicated to celebrating YOU—your beautiful soul, your warmth, and the joy you give everyone around you.",
       icon: Cake,
@@ -154,12 +155,12 @@ export default function SurpriseBase() {
     {
       id: 1,
       image: "/couple1.png",
-      title: "First Golden Sunset 🌅",
+      title: "Best moment of my 23rd Birthday",
       category: "Sweet Dates",
       tag: "Magic Hour",
-      date: "October 14",
+      date: "June 20",
       note: "The way the golden sunset light hit your beautiful smile made time stand completely still. My favorite memory of us.",
-      location: "Sunset Point",
+      location: "Stella Villa",
       hearts: 142
     },
     {
@@ -321,7 +322,7 @@ export default function SurpriseBase() {
                   <div>
                     <input
                       type="password"
-                      placeholder="Passcode (Default: 1234 or 'love')"
+                      placeholder="Passcode"
                       value={passcode}
                       onChange={(e) => setPasscode(e.target.value)}
                       className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${error ? "border-red-500 animate-pulse" : "border-rose-500/30"
@@ -477,6 +478,9 @@ export default function SurpriseBase() {
                   })}
                 </div>
               </section>
+
+              {/* VIDEO SECTION: SPECIAL MOVIE EDIT */}
+              <VideoSection videoSrc="/pari-bday-video.mp4" />
 
               {/* NEW SECTION: OUR ROMANTIC GALLERY & MEMORY WALL */}
               <section className="space-y-10">
@@ -831,7 +835,7 @@ export default function SurpriseBase() {
                   "Happy Birthday! May your day be as wonderful and bright as you make my life every single day."
                 </p>
                 <div className="text-xs text-rose-300/50 uppercase tracking-widest">
-                  Crafted specially for your birthday ❤️
+                  Crafted specially for Her birthday ❤️
                 </div>
               </footer>
             </motion.div>
