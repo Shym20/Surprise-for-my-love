@@ -8,22 +8,16 @@ import {
   Volume2,
   VolumeX,
   Maximize2,
-  Film,
-  Sparkles,
   Heart,
-  Info,
-  Check,
-  Video,
-  Clapperboard,
-  RotateCcw
+  Clapperboard
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function VideoSection({
-  videoSrc = "/pari-bday-video.mp4",
+  videoSrc = "/pari-bday-video-hd.mp4",
   posterSrc = "/couple1.png",
-  title = "Our Special Moments in Motion 🎬",
-  subtitle = "A movie edited with all my love, capturing our best memories together."
+  title = "Because Your Question Deserves the Most Beautiful Answer",
+  subtitle = "When you ask how you look, my heart answers in a whisper: Afreen, Afreen."
 }) {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
@@ -34,8 +28,7 @@ export default function VideoSection({
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [showControls, setShowControls] = useState(true);
-  const [showInstructions, setShowInstructions] = useState(false);
-  const [likes, setLikes] = useState(18);
+  const [likes, setLikes] = useState(Infinity);
   const [hasLiked, setHasLiked] = useState(false);
   const controlsTimeoutRef = useRef(null);
 
@@ -50,10 +43,16 @@ export default function VideoSection({
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
-      setIsPlaying(false);
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.error("Playback error:", err);
+            setIsPlaying(false);
+          });
+      }
     }
   };
 
@@ -96,7 +95,7 @@ export default function VideoSection({
   };
 
   const handleLike = () => {
-    setLikes((prev) => prev + 1);
+    setLikes((prev) => (prev === Infinity ? 19 : prev + 1));
     setHasLiked(true);
     confetti({
       particleCount: 80,
@@ -149,18 +148,25 @@ export default function VideoSection({
           onMouseLeave={() => isPlaying && setShowControls(false)}
           className="relative rounded-3xl overflow-hidden bg-slate-950 border border-rose-500/40 shadow-2xl group flex items-center justify-center min-h-[550px] sm:min-h-[700px]"
         >
-          {/* Video Tag */}
+          {/* Video Tag with primary and fallback sources */}
           <video
             ref={videoRef}
-            src={videoSrc}
             poster={posterSrc}
+            preload="metadata"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={() => setIsPlaying(false)}
             onClick={togglePlay}
-            className="w-full h-auto max-h-[85vh] object-contain cursor-pointer"
+            className="w-full h-auto max-h-[85vh] object-contain cursor-pointer relative z-10"
             playsInline
-          />
+          >
+            <source src={videoSrc} type="video/mp4" />
+            <source src="/pari-bday-video-hd.mp4" type="video/mp4" />
+         
+            Your browser does not support HTML5 video.
+          </video>
 
           {/* Big Play Overlay (when paused or start) */}
           <AnimatePresence>
@@ -176,23 +182,6 @@ export default function VideoSection({
               </motion.button>
             )}
           </AnimatePresence>
-
-          {/* Floating Top Tag */}
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-2 pointer-events-none">
-            <span className="bg-slate-950/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-rose-400/30 text-xs font-semibold text-rose-200 flex items-center gap-1.5 shadow-lg">
-              <Film size={14} className="text-rose-400" /> Our Movie Edit
-            </span>
-          </div>
-
-          {/* Instruction Toggle Button (Top Right) */}
-          <button
-            onClick={() => setShowInstructions(!showInstructions)}
-            className="absolute top-4 right-4 z-30 bg-slate-950/80 hover:bg-slate-900 backdrop-blur-md px-3 py-1.5 rounded-full border border-rose-400/30 text-xs font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-all shadow-lg"
-            title="How to upload your own video"
-          >
-            <Info size={14} />
-            <span>{showInstructions ? "Hide Helper" : "Replace Video Info"}</span>
-          </button>
 
           {/* Video Control Bar (Bottom Glassmorphism) */}
           <motion.div
@@ -244,7 +233,7 @@ export default function VideoSection({
                   }`}
                 >
                   <Heart size={14} fill={hasLiked ? "currentColor" : "none"} />
-                  <span>{likes}</span>
+                  <span>{likes === Infinity ? "∞" : likes}</span>
                 </button>
 
                 <button
@@ -259,41 +248,6 @@ export default function VideoSection({
           </motion.div>
         </div>
       </div>
-
-      {/* Helper Modal / Alert banner for updating the video */}
-      <AnimatePresence>
-        {showInstructions && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="max-w-lg mx-auto p-5 rounded-2xl bg-slate-900/90 border border-amber-500/40 backdrop-blur-xl text-rose-100 space-y-3 shadow-xl"
-          >
-            <div className="flex items-center justify-between text-amber-300 font-bold text-sm">
-              <span className="flex items-center gap-2">
-                <Video size={18} /> How to Add Your Edited Video
-              </span>
-              <button
-                onClick={() => setShowInstructions(false)}
-                className="text-xs text-rose-300 hover:text-white px-2 py-1 rounded bg-slate-800"
-              >
-                Close
-              </button>
-            </div>
-            <ol className="list-decimal list-inside space-y-2 text-xs sm:text-sm text-rose-200/90 leading-relaxed font-sans">
-              <li>
-                Place your video file inside the <code className="bg-slate-950 px-1.5 py-0.5 rounded text-amber-300 font-mono">public/</code> folder (e.g. <code className="bg-slate-950 px-1.5 py-0.5 rounded text-amber-300 font-mono">public/my-special-video.mp4</code>).
-              </li>
-              <li>
-                Open <code className="bg-slate-950 px-1.5 py-0.5 rounded text-amber-300 font-mono">src/app/_components/landing-page/page.js</code> (or pass the prop into <code className="bg-slate-950 px-1.5 py-0.5 rounded text-amber-300 font-mono">VideoSection</code>).
-              </li>
-              <li>
-                Set <code className="bg-slate-950 px-1.5 py-0.5 rounded text-amber-300 font-mono">videoSrc="/my-special-video.mp4"</code>.
-              </li>
-            </ol>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

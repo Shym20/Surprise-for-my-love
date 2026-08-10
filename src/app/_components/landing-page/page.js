@@ -30,6 +30,9 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import VideoSection from "./VideoSection";
+import SongLyricsSection from "./SongLyricsSection";
+import ThingsILoveSection from "./ThingsILoveSection";
+import Navbar from "../Navbar";
 
 export default function SurpriseBase() {
   const [unlocked, setUnlocked] = useState(false);
@@ -114,13 +117,13 @@ export default function SurpriseBase() {
       tag: "God's Plan",
     },
     {
-  date: "20 Jun 2025",
-  title: "Our First Journey Together",
-  description:
-    "20 June 2025 — the day we began our first journey beyond Madhya Pradesh. Vrindavan, Barsana, Gokul and Mathura became more than just places on a map; they became beautiful chapters of our story, filled with laughter, memories, and moments I wish I could relive forever.",
-  icon: Heart,
-  tag: "A Journey to Remember",
-},
+      date: "20 Jun 2025",
+      title: "Our First Journey Together",
+      description:
+        "20 June 2025 — the day we began our first journey beyond Madhya Pradesh. Vrindavan, Barsana, Gokul and Mathura became more than just places on a map; they became beautiful chapters of our story, filled with laughter, memories, and moments I wish I could relive forever.",
+      icon: Heart,
+      tag: "A Journey to Remember",
+    },
     {
       date: "Today",
       title: "Happy Birthday My Girl! 🎂",
@@ -154,92 +157,137 @@ export default function SurpriseBase() {
   const coupleMemories = [
     {
       id: 1,
-      image: "/couple1.png",
-      title: "Best moment of my 23rd Birthday",
-      category: "Sweet Dates",
-      tag: "Magic Hour",
+      image: "/couple9.png",
+      title: "My 22nd Birthday in Vrindavan",
+      category: "Special Memories",
+      tag: "Birthday Bliss",
       date: "June 20",
-      note: "The way the golden sunset light hit your beautiful smile made time stand completely still. My favorite memory of us.",
-      location: "Stella Villa",
-      hearts: 142
+      note: "Celebrating my 22nd birthday in the beautiful streets of Vrindavan made the day even more special. Sharing those moments with you turned my birthday into a memory I’ll always hold close to my heart.",
+      location: "Vrindavan",
+      hearts: 262
     },
     {
       id: 2,
       image: "/couple2.png",
-      title: "Cozy Coffee & Laughs ☕",
-      category: "Sweet Dates",
-      tag: "Everyday Magic",
-      date: "November 02",
-      note: "Holding hands over warm coffee while laughing uncontrollably at inside jokes. Hours felt like just seconds with you.",
-      location: "Our Favorite Café",
-      hearts: 189
+      title: "The Night Before My Birthday 🎂❤️",
+      category: "Sweet Memories",
+      tag: "Birthday Eve",
+      date: "June 19, 2026",
+      note: "The perfect night before my birthday — Us at our private villa, dancing without a care, singing at the top of our voices, playing around, laughing endlessly, and making memories before the birthday even began. A night I wish I could relive again and again.",
+      location: "Stella Villa",
+      hearts: 222
     },
     {
       id: 3,
       image: "/couple3.png",
-      title: "Weekend Escape 🌄",
-      category: "Adventures",
-      tag: "Road Trip",
-      date: "December 18",
-      note: "Exploring scenic mountain paths together. Walking side by side with you made every single view ten times more magical.",
-      location: "Mountain Pines",
-      hearts: 210
+      title: "Birthday Midnight Madness 🏊‍♂️🎂❤️",
+      category: "Birthday Memories",
+      tag: "Midnight Magic",
+      date: "June 20, 2026",
+      note: "Somewhere between 1 and 3 AM, while the whole world was asleep, we were busy making our own little celebration at Stella Villa. Swimming, playing, dancing, singing, laughing, and enjoying every crazy little moment together — the kind of birthday night I’ll never forget.",
+      location: "Stella Villa",
+      hearts: 222
     },
     {
       id: 4,
       image: "/couple4.png",
-      title: "Starlight Romance ✨",
-      category: "Romantic Nights",
-      tag: "Midnight Magic",
-      date: "January 05",
-      note: "Underneath a sky full of glittering stars, whispering sweet promises and holding you close against the midnight chill.",
-      location: "Stargazing Hill",
-      hearts: 256
+      title: "The Birthday Midnight Moment 🎂❤️",
+      category: "Birthday Memories",
+      tag: "12 AM Magic",
+      date: "June 20, 2026",
+      note: "The clock struck 12 at Stella Villa, and suddenly it was my birthday. Cutting the cake together, sharing those quiet romantic moments, smiling at each other, and creating memories that made the beginning of my special day absolutely unforgettable.",
+      location: "Stella Villa",
+      hearts: 222
     },
     {
       id: 5,
       image: "/couple5.png",
-      title: "Seaside Breeze 🌊",
-      category: "Adventures",
-      tag: "Ocean Vibe",
-      date: "February 22",
-      note: "Listening to ocean waves crashing against the shore while soft winds blew across your face. Pure serenity and love.",
-      location: "Golden Beach",
-      hearts: 198
+      title: "Candlelight Dinner Date 🕯️❤️",
+      category: "Romantic Nights",
+      tag: "Dinner & Love",
+      date: "November 7, 2025",
+      note: "A beautiful candlelight dinner at GK Hotel — soft lights, delicious food, quiet conversations, and you sitting across from me. It was one of those simple evenings that felt incredibly romantic and became a memory worth keeping forever.",
+      location: "GK Hotel",
+      hearts: 1
     },
     {
       id: 6,
       image: "/couple6.png",
-      title: "Fairytale Celebration 🎉",
-      category: "Forever Love",
-      tag: "Celebration",
-      date: "March 11",
-      note: "Surrounded by festive lights, music, and joy. Seeing your eyes sparkle with happiness filled my entire heart with bliss.",
-      location: "City Lights Festival",
-      hearts: 312
+      title: "Winter Days at the Farm 🌾❤️",
+      category: "Sweet Memories",
+      tag: "Cozy Winter",
+      date: "December 7, 2025",
+      note: "A perfect winter day at the farm — enjoying the chilly weather, cooking something delicious together, sharing laughs, and simply soaking in the warmth of each other's company. Nothing fancy, just us making the simplest day feel special.",
+      location: "The Farm",
+      hearts: 102
     },
     {
       id: 7,
       image: "/couple7.png",
-      title: "Rainy Day Hugs 🌧️",
-      category: "Sweet Dates",
-      tag: "Cozy Moments",
-      date: "April 09",
-      note: "Wrapped in cozy blankets listening to raindrops on the window, feeling so incredibly safe and loved in your arms.",
-      location: "Home Sweet Home",
-      hearts: 275
+      title: "Her Favorite Kashmiri Chudiya ❤️✨",
+      category: "Special Memories",
+      tag: "Little Things, Big Love",
+      date: "February 15, 2026",
+      note: "A day made special by the little things — buying you your favorite Kashmiri chudiya and then spending a beautiful day together at Rajwada Gopal Mandir. Seeing your happiness in those bangles made the whole moment worth remembering.",
+      location: "Rajwada Gopal Mandir",
+      hearts: 107
     },
     {
       id: 8,
       image: "/couple8.png",
-      title: "Forever & Always 💖",
-      category: "Forever Love",
-      tag: "Endless Journey",
-      date: "Forever",
-      note: "Looking into your eyes and knowing without a single shadow of a doubt that you are my soulmate and my forever choice.",
-      location: "Right Beside You",
-      hearts: 480
-    }
+      title: "Our First Dandiya Night 💃❤️",
+      category: "Special Memories",
+      tag: "Dholi Tara 4.0",
+      date: "September 24, 2025",
+      note: "Our first Navratri Dandiya night together — dressed up, dancing to the beats, and making memories at Dholi Tara 4.0. Sharing the colors, music, and festive energy with you at Essentia Luxury Hotel made that night truly unforgettable.",
+      location: "Essentia Luxury Hotel",
+      hearts: 225
+    },
+    {
+      id: 9,
+      image: "/couple10.png",
+      title: "Our Monsoon Moment 🌧️💖",
+      category: "Sweet Dates",
+      tag: "Rainy Romance",
+      date: "July 13, 2025",
+      note: "A beautiful monsoon day at High Garden Cafe, wrapped in cozy moments, half-drenched clothes, endless smiles, and the kind of closeness that made the rain feel even more romantic.",
+      location: "High Garden Cafe",
+      hearts: 85
+    },
+    {
+      id: 10,
+      image: "/couple11.png",
+      title: "Our First Holi Together 🌈💖",
+      category: "Special Memories",
+      tag: "Rangon Wala Pyaar",
+      date: "March 14",
+      note: "Our very first Holi together — covered in colors, laughter, and countless little moments that made the day unforgettable. Celebrating the festival of colors with you made every shade feel a little more beautiful.",
+      location: "Colors Carnival 1.0",
+      hearts: 225
+    },
+    {
+      id: 11,
+      image: "/couple12.png",
+      title: "Your 21st Birthday 💖🎂",
+      category: "Birthday Memories",
+      tag: "Lakeside Magic",
+      date: "August 18, 2025",
+      note: "Celebrating your 21st birthday by the lakeside made the day feel even more special. Watching you smile, enjoying the peaceful view, and being there beside you made your birthday a memory I’ll always cherish.",
+      location: "Bilawali Lake",
+      hearts: 60
+    },
+    {
+  id: 11,
+  image: "/couple1.png",
+  title: "Our Love, Their Conversations ❤️‍🔥",
+  category: "Unforgettable Moments",
+  tag: "Let Them Talk",
+  date: "June 20, 2026",
+  note: "You wore what made I feel beautiful, and somehow that became everyone else's business. While some people chose to talk about the clothes, we were busy creating a memory — you surprising me and booking a private theatre for my birthday. 11 shares on our post, conversations all around the village, and everyone talking about our moment… maybe that's just another way of saying people couldn't stop noticing us. Let them talk — we were too busy living our story. ❤️",
+  location: "Private Theatre",
+  hearts: 222
+}
+
   ];
 
   return (
@@ -351,8 +399,11 @@ export default function SurpriseBase() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="w-full space-y-16 py-6"
+              className="w-full space-y-16 py-6 pt-16"
             >
+              {/* NAVIGATION BAR */}
+              <Navbar />
+
               {/* HERO BIRTHDAY HEADER */}
               <div className="text-center space-y-4 relative py-6">
                 <motion.div
@@ -415,7 +466,7 @@ export default function SurpriseBase() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
                       <div className="absolute bottom-4 left-4 right-4 text-center">
                         <span className="text-xs text-rose-200/90 bg-slate-900/80 px-3 py-1 rounded-full backdrop-blur-md border border-rose-400/30">
-                         HAPPY 22nd 🥂 
+                          HAPPY 22nd 🥂
                         </span>
                       </div>
                     </motion.div>
@@ -480,7 +531,13 @@ export default function SurpriseBase() {
               </section>
 
               {/* VIDEO SECTION: SPECIAL MOVIE EDIT */}
-              <VideoSection videoSrc="/pari-bday-video.mp4" />
+              <VideoSection videoSrc="/pari-bday-video-hd.mp4" />
+
+              {/* SONG LYRICS SECTION: SPECIAL SONG FOR HER */}
+              <SongLyricsSection />
+
+              {/* THINGS & WORDS I LOVE ABOUT HER SECTION */}
+              <ThingsILoveSection />
 
               {/* NEW SECTION: OUR ROMANTIC GALLERY & MEMORY WALL */}
               <section className="space-y-10">
@@ -508,11 +565,10 @@ export default function SurpriseBase() {
                         <button
                           key={cat}
                           onClick={() => setSelectedCategory(cat)}
-                          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 ${
-                            isActive
-                              ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 scale-105"
-                              : "bg-slate-900/60 hover:bg-slate-800 text-rose-200/80 border border-rose-500/20"
-                          }`}
+                          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 ${isActive
+                            ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 scale-105"
+                            : "bg-slate-900/60 hover:bg-slate-800 text-rose-200/80 border border-rose-500/20"
+                            }`}
                         >
                           {cat === "All" && <Sparkles size={14} />}
                           {cat === "Sweet Dates" && <Smile size={14} />}
@@ -554,9 +610,8 @@ export default function SurpriseBase() {
                           className={`relative group perspective-1000 ${tiltClass} transition-all duration-300`}
                         >
                           <div
-                            className={`relative w-full h-[380px] rounded-3xl transition-transform duration-700 [transform-style:preserve-3d] ${
-                              isFlipped ? "[transform:rotateY(180deg)]" : ""
-                            }`}
+                            className={`relative w-full h-[380px] rounded-3xl transition-transform duration-700 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateY(180deg)]" : ""
+                              }`}
                           >
                             {/* FRONT OF POLAROID CARD */}
                             <div className="absolute inset-0 w-full h-full bg-slate-900/70 backdrop-blur-xl border border-rose-500/30 rounded-3xl p-3.5 flex flex-col justify-between shadow-2xl [backface-visibility:hidden] hover:border-rose-400/60 transition-all">
@@ -835,7 +890,7 @@ export default function SurpriseBase() {
                   "Happy Birthday! May your day be as wonderful and bright as you make my life every single day."
                 </p>
                 <div className="text-xs text-rose-300/50 uppercase tracking-widest">
-                  Crafted specially for Her birthday ❤️
+                  CREATED, Coded & Crafted by SHYAM PADIYAR ❤️
                 </div>
               </footer>
             </motion.div>
