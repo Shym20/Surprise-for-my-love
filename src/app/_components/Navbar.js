@@ -11,7 +11,7 @@ export default function Navbar() {
 
   const navItems = [
     { label: "Surprise Home", href: "/", icon: Home },
-    { label: "Fun Quiz 🧩", href: "/quiz", icon: HelpCircle },
+    { label: "Love Game 🎮", href: "/quiz", icon: Heart },
   ];
 
   return (
@@ -26,7 +26,7 @@ export default function Navbar() {
           <Heart size={16} fill="currentColor" />
         </motion.div>
         <span className="font-extrabold text-sm sm:text-base text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-200 to-amber-200 tracking-tight">
-          Prii & Shyam ❤️
+          Prii & Shym ❤️
         </span>
       </Link>
 

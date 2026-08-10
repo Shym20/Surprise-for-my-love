@@ -29,7 +29,7 @@ const notoSerif = Noto_Serif({
 });
 
 export const metadata = {
-  title: "A Special Surprise For You ❤️",
+  title: "A Special Surprise For You - My Priii ❤️",
   description: "A little gift made with love, memories, and appreciation just for you.",
   icons: {
     icon: "/favicon.ico",

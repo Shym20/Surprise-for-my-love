@@ -32,6 +32,7 @@ import confetti from "canvas-confetti";
 import VideoSection from "./VideoSection";
 import SongLyricsSection from "./SongLyricsSection";
 import ThingsILoveSection from "./ThingsILoveSection";
+import PromiseSection from "./PromiseSection";
 import Navbar from "../Navbar";
 
 export default function SurpriseBase() {
@@ -79,7 +80,7 @@ export default function SurpriseBase() {
   useEffect(() => {
     const timer = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % bgImages.length);
-    }, 6000);
+    }, 2000);
     return () => clearInterval(timer);
   }, []);
 
@@ -530,16 +531,7 @@ export default function SurpriseBase() {
                 </div>
               </section>
 
-              {/* VIDEO SECTION: SPECIAL MOVIE EDIT */}
-              <VideoSection videoSrc="/pari-bday-video-hd.mp4" />
-
-              {/* SONG LYRICS SECTION: SPECIAL SONG FOR HER */}
-              <SongLyricsSection />
-
-              {/* THINGS & WORDS I LOVE ABOUT HER SECTION */}
-              <ThingsILoveSection />
-
-              {/* NEW SECTION: OUR ROMANTIC GALLERY & MEMORY WALL */}
+               {/* NEW SECTION: OUR ROMANTIC GALLERY & MEMORY WALL */}
               <section className="space-y-10">
                 <div className="text-center space-y-3">
                   <motion.div
@@ -727,6 +719,15 @@ export default function SurpriseBase() {
                 </div>
               </section>
 
+              {/* SONG LYRICS SECTION: SPECIAL SONG FOR HER */}
+              <SongLyricsSection />
+
+              {/* VIDEO SECTION: SPECIAL MOVIE EDIT */}
+              <VideoSection videoSrc="/pari-bday-video-hd.mp4" />
+
+              {/* THINGS & WORDS I LOVE ABOUT HER SECTION */}
+              <ThingsILoveSection />
+
               {/* LIGHTBOX MODAL FOR FULL SCREEN PHOTO MEMORY */}
               <AnimatePresence>
                 {activeModalItem && (
@@ -878,6 +879,9 @@ export default function SurpriseBase() {
                   })}
                 </div>
               </section>
+
+              {/* MY PROMISE TO YOU SECTION (PROMISE OF TOGETHERNESS) */}
+              <PromiseSection />
 
               {/* FOOTER BIRTHDAY LOVE NOTE */}
               <footer className="text-center py-10 border-t border-rose-500/20 space-y-4">
