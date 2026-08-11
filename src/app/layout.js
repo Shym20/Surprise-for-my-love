@@ -33,6 +33,8 @@ export const metadata = {
   description: "A little gift made with love, memories, and appreciation just for you.",
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
   },
 };
 

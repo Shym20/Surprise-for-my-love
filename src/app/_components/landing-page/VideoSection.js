@@ -66,23 +66,25 @@ export default function VideoSection({
     if (!videoRef.current) return;
     const current = videoRef.current.currentTime;
     const total = videoRef.current.duration;
-    if (total > 0) {
+    if (isFinite(total) && total > 0 && isFinite(current)) {
       setProgress((current / total) * 100);
       setCurrentTime(formatTime(current));
     }
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current) {
+    if (videoRef.current && isFinite(videoRef.current.duration)) {
       setDuration(formatTime(videoRef.current.duration));
     }
   };
 
   const handleSeek = (e) => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !isFinite(videoRef.current.duration)) return;
     const seekTime = (e.target.value / 100) * videoRef.current.duration;
-    videoRef.current.currentTime = seekTime;
-    setProgress(e.target.value);
+    if (isFinite(seekTime)) {
+      videoRef.current.currentTime = seekTime;
+      setProgress(e.target.value);
+    }
   };
 
   const handleFullscreen = () => {
@@ -164,7 +166,6 @@ export default function VideoSection({
           >
             <source src={videoSrc} type="video/mp4" />
             <source src="/pari-bday-video-hd.mp4" type="video/mp4" />
-         
             Your browser does not support HTML5 video.
           </video>
 

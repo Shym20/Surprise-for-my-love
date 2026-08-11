@@ -15,13 +15,18 @@ import {
   Gift,
   Smile,
   ShieldCheck,
-  Star
+  Star,
+  Lock
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import Navbar from "../_components/Navbar";
 import Link from "next/link";
 
 export default function SmallLoveGamePage() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [passcode, setPasscode] = useState("");
+  const [error, setError] = useState(false);
+
   const [gameState, setGameState] = useState("start"); // "start" | "playing" | "won"
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState(0);
@@ -30,6 +35,27 @@ export default function SmallLoveGamePage() {
   const [collectedInLevel, setCollectedInLevel] = useState(0);
   const [heartPos, setHeartPos] = useState({ top: "50%", left: "50%" });
   const [currentSecretNote, setCurrentSecretNote] = useState("");
+
+  const SECRET_PASSCODE = "1820";
+
+  const handleUnlock = (e) => {
+    e.preventDefault();
+    if (
+      passcode === SECRET_PASSCODE ||
+      passcode.toLowerCase() === "love" ||
+      passcode.toLowerCase() === "birthday"
+    ) {
+      setUnlocked(true);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    } else {
+      setError(true);
+      setTimeout(() => setError(false), 1500);
+    }
+  };
 
   const secretLoveNotes = [
     "Prii, you have the prettiest smile in the entire universe! ✨",
@@ -107,7 +133,79 @@ export default function SmallLoveGamePage() {
       {/* NAVBAR */}
       <Navbar />
 
-      <div className="max-w-3xl mx-auto px-4 pt-24 space-y-8 text-center">
+      <div className="max-w-3xl mx-auto px-4 pt-24 space-y-8 text-center flex flex-col items-center min-h-[80vh] justify-center">
+        <AnimatePresence mode="wait">
+          {!unlocked ? (
+            /* Locked Game Zone Entry Gate */
+            <motion.div
+              key="game-lockscreen"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              className="w-full flex items-center justify-center"
+            >
+              <div className="bg-slate-900/80 backdrop-blur-2xl border border-rose-500/30 p-8 sm:p-10 rounded-3xl shadow-2xl max-w-md w-full text-center flex flex-col items-center relative overflow-hidden">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-3xl" />
+                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-pink-500/20 rounded-full blur-3xl" />
+
+                <motion.div
+                  animate={{ scale: [1, 1.12, 1], rotate: [0, 5, -5, 0] }}
+                  transition={{ repeat: Infinity, duration: 3 }}
+                  className="p-5 bg-gradient-to-br from-rose-500/20 to-pink-500/20 rounded-2xl mb-6 border border-rose-500/40 text-rose-300 shadow-lg shadow-rose-500/10"
+                >
+                  <Lock size={38} />
+                </motion.div>
+
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-300 to-amber-200 mb-2">
+                  Game Zone Access Gate 🎮
+                </h1>
+                <p className="text-rose-200/80 text-sm mb-6 leading-relaxed">
+                  This game zone is protected! Enter the secret code to access the Love Game.
+                </p>
+
+                <form onSubmit={handleUnlock} className="w-full space-y-4">
+                  <div>
+                    <input
+                      type="password"
+                      placeholder="Enter Passcode"
+                      value={passcode}
+                      onChange={(e) => setPasscode(e.target.value)}
+                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${
+                        error ? "border-red-500 animate-pulse" : "border-rose-500/30"
+                      } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
+                    />
+                    {error && (
+                      <p className="text-red-400 text-xs mt-2 font-medium">
+                        Incorrect code! Hint: "1820" or "love" ✨
+                      </p>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold shadow-lg shadow-rose-500/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 tracking-wide"
+                  >
+                    <Sparkles size={20} /> Unlock Game Zone
+                  </button>
+                </form>
+
+                <div className="mt-6 pt-4 border-t border-rose-500/20 w-full">
+                  <Link
+                    href="/"
+                    className="text-xs text-rose-300/80 hover:text-rose-100 font-medium"
+                  >
+                    ← Back to Home Page
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="game-content"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full space-y-8"
+            >
         {/* HEADER */}
         <div className="space-y-3">
           <motion.div
@@ -284,6 +382,9 @@ export default function SmallLoveGamePage() {
             ← Back to Surprise Home Page
           </Link>
         </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

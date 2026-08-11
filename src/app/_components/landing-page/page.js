@@ -36,10 +36,6 @@ import PromiseSection from "./PromiseSection";
 import Navbar from "../Navbar";
 
 export default function SurpriseBase() {
-  const [unlocked, setUnlocked] = useState(false);
-  const [passcode, setPasscode] = useState("");
-  const [error, setError] = useState(false);
-
   // Gallery Interaction States
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [flippedCards, setFlippedCards] = useState({});
@@ -64,9 +60,6 @@ export default function SurpriseBase() {
   const [bgIndex, setBgIndex] = useState(0);
   const bgImages = ["/prii1.png", "/prii2.png", "/prii3.png", "/prii4.png"];
 
-  // Passcode default
-  const SECRET_PASSCODE = "1820"
-
   // Confetti trigger
   const triggerConfetti = () => {
     confetti({
@@ -84,28 +77,13 @@ export default function SurpriseBase() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleUnlock = (e) => {
-    e.preventDefault();
-    if (
-      passcode === SECRET_PASSCODE ||
-      passcode.toLowerCase() === "love" ||
-      passcode.toLowerCase() === "birthday"
-    ) {
-      setUnlocked(true);
-      triggerConfetti();
-    } else {
-      setError(true);
-      setTimeout(() => setError(false), 1500);
-    }
-  };
-
   // Timeline Data
   const timelineEvents = [
     {
       date: "2 May 2023",
-      title: "The Day We Met",
+      title: "The Day Everything Changed",
       description:
-        "From the very first conversation, I knew you were someone extraordinarily special. You brought an unforgettable warmth into my life.",
+        "Some people enter your life quietly, long before you realize what they will eventually mean to you. But 2 May 2023 was different—it was the day something between us finally felt real. A day that turned a familiar presence into someone incredibly close to my heart, and unknowingly became the beginning of one of the most beautiful chapters of my life.",
       icon: Sparkles,
       tag: "Beginning",
     },
@@ -278,7 +256,7 @@ export default function SurpriseBase() {
       hearts: 60
     },
     {
-  id: 11,
+  id: 12,
   image: "/couple1.png",
   title: "Our Love, Their Conversations ❤️‍🔥",
   category: "Unforgettable Moments",
@@ -338,70 +316,13 @@ export default function SurpriseBase() {
 
       {/* Main Content Area */}
       <div className="z-10 w-full max-w-5xl px-4 py-8 flex flex-col items-center">
-        <AnimatePresence mode="wait">
-          {!unlocked ? (
-            /* Locked Birthday Entry Gate */
-            <motion.div
-              key="lockscreen"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              className="my-auto min-h-[75vh] flex items-center justify-center w-full"
-            >
-              <div className="bg-slate-900/70 backdrop-blur-2xl border border-rose-500/30 p-8 sm:p-10 rounded-3xl shadow-2xl max-w-md w-full text-center flex flex-col items-center relative overflow-hidden">
-                <div className="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-3xl" />
-                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-pink-500/20 rounded-full blur-3xl" />
-
-                <motion.div
-                  animate={{ scale: [1, 1.12, 1], rotate: [0, 5, -5, 0] }}
-                  transition={{ repeat: Infinity, duration: 3 }}
-                  className="p-5 bg-gradient-to-br from-rose-500/20 to-pink-500/20 rounded-2xl mb-6 border border-rose-500/40 text-rose-300 shadow-lg shadow-rose-500/10"
-                >
-                  <Lock size={38} />
-                </motion.div>
-
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-300 to-amber-200 mb-2">
-                  Birthday Surprise Gate 🎂
-                </h1>
-                <p className="text-rose-200/80 text-sm mb-6 leading-relaxed">
-                  A special place made with love, memories, and birthday wishes just for you. Enter the secret code to step inside!
-                </p>
-
-                <form onSubmit={handleUnlock} className="w-full space-y-4">
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Passcode"
-                      value={passcode}
-                      onChange={(e) => setPasscode(e.target.value)}
-                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${error ? "border-red-500 animate-pulse" : "border-rose-500/30"
-                        } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
-                    />
-                    {error && (
-                      <p className="text-red-400 text-xs mt-2 font-medium">
-                        Hint: Use code "1234" or "love" ✨
-                      </p>
-                    )}
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold shadow-lg shadow-rose-500/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 tracking-wide"
-                  >
-                    <Sparkles size={20} /> Open Birthday Surprise
-                  </button>
-                </form>
-              </div>
-            </motion.div>
-          ) : (
-            /* Unlocked Birthday Website Dedicated Sections */
-            <motion.div
-              key="dashboard"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="w-full space-y-16 py-6 pt-16"
-            >
+        <motion.div
+          key="dashboard"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="w-full space-y-16 py-6 pt-16"
+        >
               {/* NAVIGATION BAR */}
               <Navbar />
 
@@ -898,8 +819,6 @@ export default function SurpriseBase() {
                 </div>
               </footer>
             </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </div>
   );
