@@ -66,17 +66,30 @@ export default function VideoSection({
     if (!videoRef.current) return;
     const current = videoRef.current.currentTime;
     const total = videoRef.current.duration;
-    if (isFinite(total) && total > 0 && isFinite(current)) {
+    if (isFinite(total) && total > 0) {
+      if (duration === "0:00") {
+        setDuration(formatTime(total));
+      }
       setProgress((current / total) * 100);
+      setCurrentTime(formatTime(current));
+    } else if (isFinite(current)) {
       setCurrentTime(formatTime(current));
     }
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current && isFinite(videoRef.current.duration)) {
+    if (videoRef.current && isFinite(videoRef.current.duration) && videoRef.current.duration > 0) {
       setDuration(formatTime(videoRef.current.duration));
     }
   };
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isFinite(videoRef.current.duration) && videoRef.current.duration > 0) {
+        setDuration(formatTime(videoRef.current.duration));
+      }
+    }
+  }, []);
 
   const handleSeek = (e) => {
     if (!videoRef.current || !isFinite(videoRef.current.duration)) return;
@@ -159,6 +172,8 @@ export default function VideoSection({
             onPause={() => setIsPlaying(false)}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
+            onLoadedData={handleLoadedMetadata}
+            onDurationChange={handleLoadedMetadata}
             onEnded={() => setIsPlaying(false)}
             onClick={togglePlay}
             className="w-full h-auto max-h-[85vh] object-contain cursor-pointer relative z-10"

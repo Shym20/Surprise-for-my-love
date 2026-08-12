@@ -166,7 +166,7 @@ export default function ThingsILoveSection() {
                 : "text-rose-300/70 hover:text-rose-100"
             }`}
           >
-            🗣️ Her Cutest Catchphrases
+             Her Cutest Catchphrases
           </button>
 
           <button
@@ -177,7 +177,7 @@ export default function ThingsILoveSection() {
                 : "text-rose-300/70 hover:text-rose-100"
             }`}
           >
-            💖 Things You Do That I Adore
+             Things You Do That I Adore
           </button>
         </div>
       </div>
@@ -210,7 +210,7 @@ export default function ThingsILoveSection() {
                     className="flex items-center gap-1 text-xs font-bold text-rose-400 hover:text-rose-300 bg-slate-900 border border-rose-500/30 px-2.5 py-1 rounded-full hover:scale-110 transition-all"
                   >
                     <Heart size={14} fill="currentColor" />
-                    <span>{likes}</span>
+                   
                   </button>
                 </div>
 
@@ -227,7 +227,7 @@ export default function ThingsILoveSection() {
                   <span className="flex items-center gap-1 text-amber-300">
                     <Sparkles size={12} /> Always makes me smile
                   </span>
-                  <span>Tap to send love ❤️</span>
+                 
                 </div>
               </motion.div>
             );
@@ -287,7 +287,7 @@ export default function ThingsILoveSection() {
                     className="flex items-center gap-1 text-xs font-bold text-rose-400 hover:text-rose-300 bg-slate-900 border border-rose-500/30 px-3 py-1 rounded-full hover:scale-110 transition-all"
                   >
                     <Heart size={14} fill="currentColor" />
-                    <span>{likes}</span>
+                    
                   </button>
                 </div>
               </motion.div>

@@ -176,7 +176,7 @@ export default function SmallLoveGamePage() {
                     />
                     {error && (
                       <p className="text-red-400 text-xs mt-2 font-medium">
-                        Incorrect code! Hint: "1820" or "love" ✨
+                        Incorrect code! Try Again
                       </p>
                     )}
                   </div>

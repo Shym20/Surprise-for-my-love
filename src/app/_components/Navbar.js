@@ -11,7 +11,7 @@ export default function Navbar() {
 
   const navItems = [
     { label: "Surprise Home", href: "/", icon: Home },
-    { label: "Love Game 🎮", href: "/quiz", icon: Heart },
+    { label: "Love Game", href: "/quiz", icon: Heart },
   ];
 
   return (
