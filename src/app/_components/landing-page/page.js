@@ -33,6 +33,7 @@ import VideoSection from "./VideoSection";
 import SongLyricsSection from "./SongLyricsSection";
 import ThingsILoveSection from "./ThingsILoveSection";
 import PromiseSection from "./PromiseSection";
+import LoveCounterSection from "./LoveCounterSection";
 import Navbar from "../Navbar";
 
 export default function SurpriseBase() {
@@ -586,6 +587,9 @@ export default function SurpriseBase() {
 
           {/* SONG LYRICS SECTION: SPECIAL SONG FOR HER */}
           <SongLyricsSection />
+
+          {/* LIVE LOVE COUNTER (TIME TOGETHER) */}
+          <LoveCounterSection />
 
           {/* SECTION 2: OUR CORE MEMORIES TIMELINE */}
           <section className="space-y-8">

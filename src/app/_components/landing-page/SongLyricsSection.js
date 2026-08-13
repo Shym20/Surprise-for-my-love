@@ -122,16 +122,16 @@ export default function SongLyricsSection({
       </div>
 
       {/* LISTEN ON INSTAGRAM BANNER */}
-      <div className="bg-gradient-to-r from-slate-950 via-rose-950/40 to-slate-950 border border-rose-500/30 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden">
-        <div className="flex items-center gap-4 text-center md:text-left">
-          <div className="p-4 bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 rounded-2xl text-white shadow-lg shadow-pink-500/30 flex items-center justify-center shrink-0">
-            <Instagram size={32} />
+      <div className="bg-gradient-to-r from-slate-950 via-rose-950/40 to-slate-950 border border-rose-500/30 p-4 sm:p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 shadow-xl relative overflow-hidden text-center md:text-left">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full md:w-auto">
+          <div className="p-3.5 sm:p-4 bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 rounded-2xl text-white shadow-lg shadow-pink-500/30 flex items-center justify-center shrink-0">
+            <Instagram size={28} className="sm:w-8 sm:h-8" />
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-xl font-bold text-rose-100 flex items-center justify-center md:justify-start gap-2">
-              "O Raanjheya Ve"
-              <span className="text-xs bg-rose-500/20 border border-rose-400/30 text-rose-300 px-2.5 py-0.5 rounded-full font-mono">
+            <h3 className="text-lg sm:text-xl font-bold text-rose-100 flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span>"O Raanjheya Ve"</span>
+              <span className="text-[10px] sm:text-xs bg-rose-500/20 border border-rose-400/30 text-rose-300 px-2.5 py-0.5 rounded-full font-mono whitespace-nowrap">
                 Original Track
               </span>
             </h3>
@@ -146,11 +146,11 @@ export default function SongLyricsSection({
           href={instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-extrabold text-sm sm:text-base flex items-center gap-2.5 shadow-xl shadow-pink-500/30 transition-all transform hover:scale-105 active:scale-95 shrink-0"
+          className="w-full sm:w-auto px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-extrabold text-xs sm:text-base flex items-center justify-center gap-2 sm:gap-2.5 shadow-xl shadow-pink-500/30 transition-all transform hover:scale-105 active:scale-95 shrink-0"
         >
-          <Instagram size={20} />
-          <span>Listen Song on My Music Page</span>
-          <ExternalLink size={18} />
+          <Instagram size={18} className="sm:w-5 sm:h-5 shrink-0" />
+          <span className="truncate">Listen Song on My Music Page</span>
+          <ExternalLink size={16} className="sm:w-4 sm:h-4 shrink-0" />
         </a>
       </div>
 
