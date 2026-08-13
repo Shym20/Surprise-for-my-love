@@ -657,107 +657,111 @@ export default function SurpriseBase() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setActiveModalItem(null)}
-                className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-4 sm:p-6 flex items-center justify-center overflow-y-auto"
+                className="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md p-3 sm:p-6 flex items-center justify-center overflow-y-auto"
               >
                 <motion.div
                   initial={{ scale: 0.9, y: 20 }}
                   animate={{ scale: 1, y: 0 }}
                   exit={{ scale: 0.9, y: 20 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="bg-slate-900/90 border border-rose-500/40 rounded-3xl overflow-hidden max-w-4xl w-full shadow-2xl grid grid-cols-1 md:grid-cols-12 relative"
+                  className="bg-slate-900 border border-rose-500/40 rounded-2xl sm:rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] shadow-2xl flex flex-col md:grid md:grid-cols-12 relative my-auto"
                 >
-                  {/* Close Button */}
+                  {/* Close Button - Sticky Top Right for Mobile & Desktop */}
                   <button
                     onClick={() => setActiveModalItem(null)}
-                    className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-slate-950/70 border border-rose-400/40 text-rose-200 hover:text-white hover:bg-rose-500 transition-all"
+                    className="absolute top-3 right-3 z-50 p-2.5 rounded-full bg-slate-950/90 border border-rose-400/60 text-rose-100 hover:text-white hover:bg-rose-500 shadow-2xl backdrop-blur-md transition-all active:scale-95 cursor-pointer"
+                    aria-label="Close modal"
                   >
                     <X size={20} />
                   </button>
 
-                  {/* Modal Image View */}
-                  <div className="md:col-span-7 bg-slate-950 relative min-h-[320px] sm:min-h-[420px] flex items-center justify-center overflow-hidden">
-                    <img
-                      src={activeModalItem.image}
-                      alt={activeModalItem.title}
-                      className="w-full h-full object-cover max-h-[500px]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-rose-200/90">
-                      <span className="bg-slate-900/80 px-3 py-1 rounded-full border border-rose-400/30">
-                        📍 {activeModalItem.location}
-                      </span>
-                      <span className="bg-rose-500/20 px-3 py-1 rounded-full border border-rose-400/30 text-rose-300">
-                        {activeModalItem.tag}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Modal Content Info */}
-                  <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-                    <div className="space-y-4">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-semibold">
-                        <Calendar size={13} /> {activeModalItem.date}
-                      </div>
-
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-rose-100">
-                        {activeModalItem.title}
-                      </h2>
-
-                      <div className="p-4 rounded-2xl bg-slate-950/60 border border-rose-500/20 space-y-2">
-                        <span className="text-xs font-semibold text-rose-300 flex items-center gap-1">
-                          <Quote size={14} /> Personal Note:
+                  {/* Scrollable Container for Mobile */}
+                  <div className="w-full h-full overflow-y-auto flex flex-col md:grid md:grid-cols-12 md:col-span-12">
+                    {/* Modal Image View */}
+                    <div className="md:col-span-7 bg-slate-950 relative min-h-[250px] sm:min-h-[380px] max-h-[45vh] md:max-h-none flex items-center justify-center overflow-hidden shrink-0">
+                      <img
+                        src={activeModalItem.image}
+                        alt={activeModalItem.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-rose-200/90 pr-12 md:pr-0">
+                        <span className="bg-slate-900/80 px-2.5 py-1 rounded-full border border-rose-400/30">
+                          📍 {activeModalItem.location}
                         </span>
-                        <p className="text-rose-200/90 italic font-serif text-sm leading-relaxed">
-                          "{activeModalItem.note}"
-                        </p>
+                        <span className="bg-rose-500/20 px-2.5 py-1 rounded-full border border-rose-400/30 text-rose-300">
+                          {activeModalItem.tag}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Modal Action Controls */}
-                    <div className="space-y-4 pt-2">
-                      <div className="flex items-center justify-between text-sm text-rose-200">
-                        <span>Total Love Reactions</span>
-                        <span className="font-bold text-rose-400 flex items-center gap-1 text-base">
-                          <Heart fill="currentColor" size={18} />{" "}
-                          {activeModalItem.hearts + (likesCount[activeModalItem.id] || 0)}
-                        </span>
+                    {/* Modal Content Info */}
+                    <div className="md:col-span-5 p-5 sm:p-8 flex flex-col justify-between space-y-5 grow">
+                      <div className="space-y-3">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-semibold">
+                          <Calendar size={13} /> {activeModalItem.date}
+                        </div>
+
+                        <h2 className="text-xl sm:text-3xl font-extrabold text-rose-100">
+                          {activeModalItem.title}
+                        </h2>
+
+                        <div className="p-3.5 rounded-xl bg-slate-950/60 border border-rose-500/20 space-y-1.5">
+                          <span className="text-xs font-semibold text-rose-300 flex items-center gap-1">
+                            <Quote size={14} /> Personal Note:
+                          </span>
+                          <p className="text-rose-200/90 italic font-serif text-xs sm:text-sm leading-relaxed">
+                            "{activeModalItem.note}"
+                          </p>
+                        </div>
                       </div>
 
-                      <button
-                        onClick={() => handleLike(activeModalItem.id)}
-                        className="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-                      >
-                        <Heart fill="currentColor" size={20} /> Send Love & Confetti 🎉
-                      </button>
-
-                      {/* Navigation between Modal items */}
-                      <div className="flex items-center justify-between pt-2">
-                        <button
-                          onClick={() => {
-                            const currentIndex = coupleMemories.findIndex(
-                              (m) => m.id === activeModalItem.id
-                            );
-                            const prevIndex =
-                              (currentIndex - 1 + coupleMemories.length) % coupleMemories.length;
-                            setActiveModalItem(coupleMemories[prevIndex]);
-                          }}
-                          className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
-                        >
-                          <ChevronLeft size={14} /> Previous Memory
-                        </button>
+                      {/* Modal Action Controls */}
+                      <div className="space-y-3 pt-2">
+                        <div className="flex items-center justify-between text-xs sm:text-sm text-rose-200">
+                          <span>Total Love Reactions</span>
+                          <span className="font-bold text-rose-400 flex items-center gap-1 text-sm sm:text-base">
+                            <Heart fill="currentColor" size={16} />{" "}
+                            {activeModalItem.hearts + (likesCount[activeModalItem.id] || 0)}
+                          </span>
+                        </div>
 
                         <button
-                          onClick={() => {
-                            const currentIndex = coupleMemories.findIndex(
-                              (m) => m.id === activeModalItem.id
-                            );
-                            const nextIndex = (currentIndex + 1) % coupleMemories.length;
-                            setActiveModalItem(coupleMemories[nextIndex]);
-                          }}
-                          className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                          onClick={() => handleLike(activeModalItem.id)}
+                          className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                         >
-                          Next Memory <ChevronRight size={14} />
+                          <Heart fill="currentColor" size={18} /> Send Love & Confetti 🎉
                         </button>
+
+                        {/* Navigation between Modal items */}
+                        <div className="flex items-center justify-between pt-1">
+                          <button
+                            onClick={() => {
+                              const currentIndex = coupleMemories.findIndex(
+                                (m) => m.id === activeModalItem.id
+                              );
+                              const prevIndex =
+                                (currentIndex - 1 + coupleMemories.length) % coupleMemories.length;
+                              setActiveModalItem(coupleMemories[prevIndex]);
+                            }}
+                            className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                          >
+                            <ChevronLeft size={14} /> Previous Memory
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              const currentIndex = coupleMemories.findIndex(
+                                (m) => m.id === activeModalItem.id
+                              );
+                              const nextIndex = (currentIndex + 1) % coupleMemories.length;
+                              setActiveModalItem(coupleMemories[nextIndex]);
+                            }}
+                            className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                          >
+                            Next Memory <ChevronRight size={14} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

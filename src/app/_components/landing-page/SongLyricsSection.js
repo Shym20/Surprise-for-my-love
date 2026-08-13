@@ -155,34 +155,34 @@ export default function SongLyricsSection({
       </div>
 
       {/* VIEW TABS & SWITCHER */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2 bg-slate-950/60 p-1 rounded-xl border border-rose-500/20">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-1.5 bg-slate-950/60 p-1 rounded-xl border border-rose-500/20 w-full sm:w-auto justify-center">
           <button
             onClick={() => setActiveTab("full")}
-            className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === "full"
                 ? "bg-rose-500/30 text-rose-100 border border-rose-400/40 shadow"
                 : "text-rose-300/60 hover:text-rose-200"
             }`}
           >
-            📜 Full Lyrics View
+            📜 Full View
           </button>
           <button
             onClick={() => setActiveTab("carousel")}
-            className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === "carousel"
                 ? "bg-rose-500/30 text-rose-100 border border-rose-400/40 shadow"
                 : "text-rose-300/60 hover:text-rose-200"
             }`}
           >
-            🎤 Stanza By Stanza Mode
+            🎤 Stanza View
           </button>
         </div>
 
         {/* Views Count Badge with Eye Icon */}
         <button
           onClick={handleViewIncrement}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 border border-rose-400/30 text-rose-300 text-xs font-bold transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 border border-rose-400/30 text-rose-300 text-xs font-bold transition-all cursor-pointer mx-auto sm:mx-0"
           title="Click to celebrate views"
         >
           <Eye size={15} className="text-rose-400" />
@@ -277,19 +277,19 @@ export default function SongLyricsSection({
           </div>
 
           {/* Carousel Navigation Buttons */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               onClick={() =>
                 setCurrentVerseIndex((prev) =>
                   prev === 0 ? lyricsData.length - 1 : prev - 1
                 )
               }
-              className="px-5 py-2.5 rounded-xl bg-slate-950 border border-rose-500/30 hover:border-rose-400 text-rose-200 text-xs font-semibold transition-all"
+              className="px-4 sm:px-5 py-2 rounded-xl bg-slate-950 border border-rose-500/30 hover:border-rose-400 text-rose-200 text-xs font-semibold transition-all flex-1 sm:flex-initial text-center"
             >
-              ← Previous Stanza
+              ← Previous
             </button>
 
-            <div className="flex gap-1.5">
+            <div className="flex gap-1.5 order-first sm:order-none w-full sm:w-auto justify-center">
               {lyricsData.map((_, idx) => (
                 <button
                   key={idx}
@@ -309,9 +309,9 @@ export default function SongLyricsSection({
                   prev === lyricsData.length - 1 ? 0 : prev + 1
                 )
               }
-              className="px-5 py-2.5 rounded-xl bg-slate-950 border border-rose-500/30 hover:border-rose-400 text-rose-200 text-xs font-semibold transition-all"
+              className="px-4 sm:px-5 py-2 rounded-xl bg-slate-950 border border-rose-500/30 hover:border-rose-400 text-rose-200 text-xs font-semibold transition-all flex-1 sm:flex-initial text-center"
             >
-              Next Stanza →
+              Next →
             </button>
           </div>
         </motion.div>

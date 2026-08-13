@@ -47,7 +47,7 @@ export default function Navbar() {
                 }`}
               >
                 <Icon size={14} />
-                <span>{item.label}</span>
+                <span className="hidden sm:inline">{item.label}</span>
               </motion.div>
             </Link>
           );
