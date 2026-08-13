@@ -50,7 +50,7 @@ export default function SongLyricsSection({
       lines: [
         "O Raanjheya Ve , Saanso me tu hi Samave ,",
         "O Raanjheya Ve , Noor tera mujhpe chhave ,",
-        "O Raanjheya Ve , Dil yo tanu takda jaave ,",
+        "O Raanjheya Ve , Dil ye tenu takda jaave ,",
         "O Raanjheya......, O Raanjheya......"
       ]
     },

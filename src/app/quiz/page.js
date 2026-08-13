@@ -65,10 +65,17 @@ export default function SmallLoveGamePage() {
     "Congratulations My Princess! You cleared all levels and won my heart forever! 👑"
   ];
 
+  const getTargetForLevel = (lvl) => {
+    if (lvl === 1) return 10;
+    if (lvl === 2) return 15;
+    if (lvl === 3) return 20;
+    return 10;
+  };
+
   const startLevel = (lvl) => {
     setLevel(lvl);
     setCollectedInLevel(0);
-    setHeartsToCollect(lvl * 4); // Lvl 1: 4, Lvl 2: 8, Lvl 3: 12
+    setHeartsToCollect(getTargetForLevel(lvl)); // Lvl 1: 10, Lvl 2: 15, Lvl 3: 20
     setTimeLeft(15);
     setGameState("playing");
     moveHeart();
@@ -93,7 +100,7 @@ export default function SmallLoveGamePage() {
       origin: { y: 0.5 }
     });
 
-    const targetForLvl = level * 4;
+    const targetForLvl = getTargetForLevel(level);
 
     if (nextCollected >= targetForLvl) {
       // Level cleared
@@ -263,7 +270,7 @@ export default function SmallLoveGamePage() {
                   Level: <span className="text-amber-400 font-mono text-base">{level}/3</span>
                 </div>
                 <div className="text-rose-300">
-                  Hearts: <span className="text-pink-400 font-mono text-base">{collectedInLevel}/{level * 4}</span>
+                  Hearts: <span className="text-pink-400 font-mono text-base">{collectedInLevel}/{getTargetForLevel(level)}</span>
                 </div>
                 <div className="text-rose-300">
                   Time: <span className="text-rose-400 font-mono text-base">{timeLeft}s</span>
