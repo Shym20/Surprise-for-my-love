@@ -67,7 +67,7 @@ export default function LoveCounterSection() {
           <Hourglass size={14} className="animate-spin text-rose-400" style={{ animationDuration: '4s' }} /> Our Journey Together
         </div>
         <h2 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-100 via-pink-200 to-amber-200 tracking-tight">
-          EVERY SECOND WITH YOU IS A GIFT ⏳❤️
+          Every Second with You A Gift ⏳❤️
         </h2>
         <p className="text-rose-200/80 text-xs sm:text-sm max-w-xl mx-auto">
           Since <span className="text-amber-300 font-semibold">2 May 2023</span>, every single moment has been filled with love, laughter, and endless memories.

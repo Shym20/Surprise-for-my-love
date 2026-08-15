@@ -546,9 +546,9 @@ export default function SurpriseBase() {
                         </div>
 
                         {/* BACK OF POLAROID CARD (REVEALS SECRET LOVE NOTE) */}
-                        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-rose-950/80 to-slate-950 backdrop-blur-2xl border border-rose-400/50 rounded-3xl p-5 flex flex-col justify-between shadow-2xl [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between border-b border-rose-500/20 pb-2">
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-rose-950/80 to-slate-950 backdrop-blur-2xl border border-rose-400/50 rounded-3xl p-5 flex flex-col justify-between shadow-2xl [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-hidden">
+                          <div className="flex flex-col flex-1 min-h-0 space-y-2 mb-2">
+                            <div className="flex items-center justify-between border-b border-rose-500/20 pb-2 shrink-0">
                               <span className="text-xs uppercase tracking-widest text-pink-300 font-bold flex items-center gap-1">
                                 <Quote size={14} /> Secret Note
                               </span>
@@ -557,12 +557,14 @@ export default function SurpriseBase() {
                               </span>
                             </div>
 
-                            <p className="text-rose-100/90 italic font-serif text-sm leading-relaxed pt-2">
-                              "{item.note}"
-                            </p>
+                            <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar min-h-0">
+                              <p className="text-rose-100/90 italic font-serif text-xs sm:text-sm leading-relaxed pt-1">
+                                "{item.note}"
+                              </p>
+                            </div>
                           </div>
 
-                          <div className="space-y-3 pt-4 border-t border-rose-500/20">
+                          <div className="space-y-3 pt-3 border-t border-rose-500/20 shrink-0">
                             <div className="flex items-center justify-between text-xs text-rose-300/80">
                               <span>📍 {item.location}</span>
                               <span className="text-rose-400 font-semibold flex items-center gap-1">
