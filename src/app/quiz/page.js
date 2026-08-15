@@ -65,6 +65,33 @@ export default function SmallLoveGamePage() {
     "Congratulations My Princess! You cleared all levels and won my heart forever! 👑"
   ];
 
+  const levelThemes = {
+    1: {
+      levelName: "Level 1: Red Passion Heart ❤️",
+      bgGradient: "from-rose-600 via-red-500 to-pink-500",
+      shadow: "shadow-rose-500/70 shadow-2xl",
+      borderColor: "border-rose-200",
+      badge: "bg-rose-500/20 text-rose-300 border-rose-400/40",
+      particleColors: ["#e11d48", "#f43f5e", "#fb7185", "#ffffff"]
+    },
+    2: {
+      levelName: "Level 2: Royal Purple Heart 💜",
+      bgGradient: "from-purple-600 via-fuchsia-500 to-pink-500",
+      shadow: "shadow-purple-500/70 shadow-2xl",
+      borderColor: "border-purple-200",
+      badge: "bg-purple-500/20 text-purple-300 border-purple-400/40",
+      particleColors: ["#a855f7", "#d946ef", "#f472b6", "#ffffff"]
+    },
+    3: {
+      levelName: "Level 3: Golden Sunset Heart 💛",
+      bgGradient: "from-amber-400 via-orange-500 to-yellow-400",
+      shadow: "shadow-amber-500/70 shadow-2xl",
+      borderColor: "border-amber-200",
+      badge: "bg-amber-500/20 text-amber-300 border-amber-400/40",
+      particleColors: ["#fbbf24", "#f59e0b", "#f97316", "#ffffff"]
+    }
+  };
+
   const getTargetForLevel = (lvl) => {
     if (lvl === 1) return 10;
     if (lvl === 2) return 15;
@@ -94,9 +121,11 @@ export default function SmallLoveGamePage() {
     const nextCollected = collectedInLevel + 1;
     setCollectedInLevel(nextCollected);
 
+    const theme = levelThemes[level] || levelThemes[1];
     confetti({
       particleCount: 25,
       spread: 50,
+      colors: theme.particleColors,
       origin: { y: 0.5 }
     });
 
@@ -107,7 +136,7 @@ export default function SmallLoveGamePage() {
       if (level < 3) {
         setCurrentSecretNote(secretLoveNotes[level - 1]);
         setGameState("level_cleared");
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 80, spread: 70, colors: theme.particleColors, origin: { y: 0.6 } });
       } else {
         // Game Won Completely
         setCurrentSecretNote(secretLoveNotes[4]);
@@ -177,9 +206,8 @@ export default function SmallLoveGamePage() {
                       placeholder="Enter Passcode"
                       value={passcode}
                       onChange={(e) => setPasscode(e.target.value)}
-                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${
-                        error ? "border-red-500 animate-pulse" : "border-rose-500/30"
-                      } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
+                      className={`w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border ${error ? "border-red-500 animate-pulse" : "border-rose-500/30"
+                        } text-center text-rose-100 placeholder-rose-400/40 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all`}
                     />
                     {error && (
                       <p className="text-red-400 text-xs mt-2 font-medium">
@@ -213,182 +241,190 @@ export default function SmallLoveGamePage() {
               animate={{ opacity: 1, y: 0 }}
               className="w-full space-y-8"
             >
-        {/* HEADER */}
-        <div className="space-y-3">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs sm:text-sm font-semibold uppercase tracking-widest"
-          >
-            <Gamepad2 size={16} /> A Little Game For You <Heart size={16} fill="currentColor" />
-          </motion.div>
-
-          <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-300 to-amber-200 tracking-tight">
-            Catch Shyam's Hearts 💕
-          </h1>
-
-          <p className="text-rose-200/80 text-xs sm:text-sm max-w-md mx-auto font-light leading-relaxed">
-            A simple, sweet mini-game just for Prii! Catch the popping hearts to unlock secret love notes and win!
-          </p>
-        </div>
-
-        {/* MAIN GAME CONTAINER */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-rose-500/25 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 relative overflow-hidden">
-          {/* GAME START SCREEN */}
-          {gameState === "start" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6 py-6"
-            >
-              <div className="p-5 bg-gradient-to-tr from-rose-500/20 to-pink-500/20 rounded-full w-24 h-24 mx-auto border border-rose-400/40 text-rose-300 flex items-center justify-center shadow-xl">
-                <Heart size={44} fill="currentColor" className="animate-pulse" />
-              </div>
-
-              <div className="space-y-2 max-w-sm mx-auto">
-                <h2 className="text-xl sm:text-2xl font-bold text-rose-100">Ready to Play, My Love?</h2>
-                <p className="text-rose-200/70 text-xs sm:text-sm">
-                  Complete 3 quick levels by catching hearts before the timer runs out!
-                </p>
-              </div>
-
-              <button
-                onClick={() => startLevel(1)}
-                className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-extrabold shadow-xl shadow-rose-500/30 transition-all transform hover:scale-105 active:scale-95 text-sm sm:text-base inline-flex items-center gap-2"
-              >
-                <Sparkles size={18} /> Start Game Level 1 🚀
-              </button>
-            </motion.div>
-          )}
-
-          {/* PLAYING SCREEN */}
-          {gameState === "playing" && (
-            <div className="space-y-6">
-              {/* TOP GAME BAR */}
-              <div className="flex items-center justify-between bg-slate-950/80 px-4 py-2.5 rounded-2xl border border-rose-500/30 text-xs sm:text-sm font-bold">
-                <div className="text-rose-300">
-                  Level: <span className="text-amber-400 font-mono text-base">{level}/3</span>
-                </div>
-                <div className="text-rose-300">
-                  Hearts: <span className="text-pink-400 font-mono text-base">{collectedInLevel}/{getTargetForLevel(level)}</span>
-                </div>
-                <div className="text-rose-300">
-                  Time: <span className="text-rose-400 font-mono text-base">{timeLeft}s</span>
-                </div>
-              </div>
-
-              {/* GAME PLAY AREA */}
-              <div className="relative w-full h-64 sm:h-80 bg-slate-950/90 rounded-2xl border border-rose-500/30 overflow-hidden flex items-center justify-center">
-                <motion.button
-                  style={{ top: heartPos.top, left: heartPos.left }}
-                  whileTap={{ scale: 0.7 }}
-                  onClick={handleCatchHeart}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 p-3.5 bg-gradient-to-tr from-rose-500 to-pink-500 rounded-full shadow-xl text-white border border-white/80 animate-bounce cursor-pointer hover:scale-110 transition-transform"
+              {/* HEADER */}
+              <div className="space-y-3">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs sm:text-sm font-semibold uppercase tracking-widest"
                 >
-                  <Heart fill="currentColor" size={32} />
-                </motion.button>
-              </div>
-            </div>
-          )}
+                  <Gamepad2 size={16} /> A Little Game For You <Heart size={16} fill="currentColor" />
+                </motion.div>
 
-          {/* LEVEL CLEARED INTERMISSION */}
-          {gameState === "level_cleared" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6 py-4"
-            >
-              <span className="text-xs uppercase tracking-widest text-amber-300 font-bold bg-amber-500/20 px-3 py-1 rounded-full border border-amber-500/30">
-                🎉 Level {level} Cleared!
-              </span>
+                <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-300 to-amber-200 tracking-tight">
+                  Catch Shyam's Hearts 💕
+                </h1>
 
-              <div className="p-5 bg-gradient-to-br from-rose-500/20 to-pink-500/20 border border-rose-400/40 rounded-2xl space-y-2 max-w-md mx-auto shadow-2xl">
-                <span className="text-xs uppercase tracking-widest text-pink-300 font-bold">
-                  Secret Note Unlocked 💌
-                </span>
-                <p className="text-sm sm:text-base font-medium text-rose-100 italic">
-                  "{currentSecretNote}"
+                <p className="text-rose-200/80 text-xs sm:text-sm max-w-md mx-auto font-light leading-relaxed">
+                  A simple, sweet mini-game just for Prii! Catch the popping hearts to unlock secret love notes and win!
                 </p>
               </div>
 
-              <button
-                onClick={() => startLevel(level + 1)}
-                className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
-              >
-                Next Level ({level + 1}/3) 🚀
-              </button>
-            </motion.div>
-          )}
+              {/* MAIN GAME CONTAINER */}
+              <div className="bg-slate-900/60 backdrop-blur-xl border border-rose-500/25 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 relative overflow-hidden">
+                {/* GAME START SCREEN */}
+                {gameState === "start" && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="space-y-6 py-6"
+                  >
+                    <div className="p-5 bg-gradient-to-tr from-rose-500/20 to-pink-500/20 rounded-full w-24 h-24 mx-auto border border-rose-400/40 text-rose-300 flex items-center justify-center shadow-xl">
+                      <Heart size={44} fill="currentColor" className="animate-pulse" />
+                    </div>
 
-          {/* GAME OVER (TIME OUT) */}
-          {gameState === "game_over" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6 py-6"
-            >
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-rose-200">Time Ran Out! ⏰</h3>
-                <p className="text-xs sm:text-sm text-rose-200/70">
-                  Don't worry my princess, you can try level {level} again!
-                </p>
+                    <div className="space-y-2 max-w-sm mx-auto">
+                      <h2 className="text-xl sm:text-2xl font-bold text-rose-100">Ready to Play, My Love?</h2>
+                      <p className="text-rose-200/70 text-xs sm:text-sm">
+                        Complete 3 quick levels by catching hearts before the timer runs out!
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => startLevel(1)}
+                      className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-extrabold shadow-xl shadow-rose-500/30 transition-all transform hover:scale-105 active:scale-95 text-sm sm:text-base inline-flex items-center gap-2"
+                    >
+                      <Sparkles size={18} /> Start Game Level 1 🚀
+                    </button>
+                  </motion.div>
+                )}
+
+                {/* PLAYING SCREEN */}
+                {gameState === "playing" && (() => {
+                  const currentTheme = levelThemes[level] || levelThemes[1];
+                  return (
+                    <div className="space-y-6">
+                      {/* TOP GAME BAR */}
+                      <div className="flex items-center justify-between bg-slate-950/80 px-4 py-2.5 rounded-2xl border border-rose-500/30 text-xs sm:text-sm font-bold">
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2.5 py-1 rounded-full border text-xs font-semibold ${currentTheme.badge}`}>
+                            {level === 1 ? "Red Heart ❤️" : level === 2 ? "Purple Heart 💜" : "Golden Heart 💛"}
+                          </span>
+                          <span className="hidden sm:inline text-rose-300">
+                            Level <span className="font-mono text-base text-amber-400">{level}/3</span>
+                          </span>
+                        </div>
+                        <div className="text-rose-300">
+                          Hearts: <span className="text-pink-400 font-mono text-base">{collectedInLevel}/{getTargetForLevel(level)}</span>
+                        </div>
+                        <div className="text-rose-300">
+                          Time: <span className="text-rose-400 font-mono text-base">{timeLeft}s</span>
+                        </div>
+                      </div>
+
+                      {/* GAME PLAY AREA */}
+                      <div className="relative w-full h-64 sm:h-80 bg-slate-950/90 rounded-2xl border border-rose-500/30 overflow-hidden flex items-center justify-center">
+                        <motion.button
+                          style={{ top: heartPos.top, left: heartPos.left }}
+                          whileTap={{ scale: 0.7 }}
+                          onClick={handleCatchHeart}
+                          className={`absolute -translate-x-1/2 -translate-y-1/2 p-4 bg-gradient-to-tr ${currentTheme.bgGradient} rounded-full ${currentTheme.shadow} text-white border-2 ${currentTheme.borderColor} animate-bounce cursor-pointer hover:scale-125 transition-all duration-200`}
+                        >
+                          <Heart fill="currentColor" size={36} className="filter drop-shadow-md" />
+                        </motion.button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* LEVEL CLEARED INTERMISSION */}
+                {gameState === "level_cleared" && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="space-y-6 py-4"
+                  >
+                    <span className="text-xs uppercase tracking-widest text-amber-300 font-bold bg-amber-500/20 px-3 py-1 rounded-full border border-amber-500/30">
+                      🎉 Level {level} Cleared!
+                    </span>
+
+                    <div className="p-5 bg-gradient-to-br from-rose-500/20 to-pink-500/20 border border-rose-400/40 rounded-2xl space-y-2 max-w-md mx-auto shadow-2xl">
+                      <span className="text-xs uppercase tracking-widest text-pink-300 font-bold">
+                        Secret Note Unlocked 💌
+                      </span>
+                      <p className="text-sm sm:text-base font-medium text-rose-100 italic">
+                        "{currentSecretNote}"
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => startLevel(level + 1)}
+                      className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
+                    >
+                      Next Level ({level + 1}/3) 🚀
+                    </button>
+                  </motion.div>
+                )}
+
+                {/* GAME OVER (TIME OUT) */}
+                {gameState === "game_over" && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="space-y-6 py-6"
+                  >
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-rose-200">Time Ran Out! ⏰</h3>
+                      <p className="text-xs sm:text-sm text-rose-200/70">
+                        Don't worry my girl, you can try level {level} again!
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => startLevel(level)}
+                      className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
+                    >
+                      <RotateCcw size={18} /> Try Again! 💖
+                    </button>
+                  </motion.div>
+                )}
+
+                {/* GAME WON (COMPLETED ALL 3 LEVELS) */}
+                {gameState === "won" && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="space-y-6 py-6"
+                  >
+                    <Trophy size={48} className="mx-auto text-amber-300 animate-bounce" />
+
+                    <div className="space-y-2">
+                      <span className="text-xs uppercase tracking-widest text-amber-400 font-bold">
+                        Grand Champion 🏆
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                        YOU WON SHYAM'S ENTIRE HEART! 💕
+                      </h2>
+                    </div>
+
+                    <div className="p-6 bg-gradient-to-br from-rose-500/25 via-pink-500/20 to-amber-500/20 border border-rose-400/50 rounded-2xl space-y-3 max-w-md mx-auto shadow-2xl">
+                      <span className="text-xs uppercase tracking-widest text-amber-300 font-bold">
+                        Final Secret Note 💌
+                      </span>
+                      <p className="text-sm sm:text-base font-bold text-rose-100 italic leading-relaxed">
+                        "{currentSecretNote}"
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => startLevel(1)}
+                      className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
+                    >
+                      <RotateCcw size={18} /> Play Game Again 🔄
+                    </button>
+                  </motion.div>
+                )}
               </div>
 
-              <button
-                onClick={() => startLevel(level)}
-                className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
-              >
-                <RotateCcw size={18} /> Try Again! 💖
-              </button>
-            </motion.div>
-          )}
-
-          {/* GAME WON (COMPLETED ALL 3 LEVELS) */}
-          {gameState === "won" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6 py-6"
-            >
-              <Trophy size={48} className="mx-auto text-amber-300 animate-bounce" />
-
-              <div className="space-y-2">
-                <span className="text-xs uppercase tracking-widest text-amber-400 font-bold">
-                  Grand Champion 🏆
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  YOU WON SHYAM'S ENTIRE HEART! 💕
-                </h2>
+              {/* BACK TO HOME */}
+              <div>
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-2 text-rose-300/80 hover:text-rose-100 text-sm font-semibold transition-colors"
+                >
+                  ← Back to Surprise Home Page
+                </Link>
               </div>
-
-              <div className="p-6 bg-gradient-to-br from-rose-500/25 via-pink-500/20 to-amber-500/20 border border-rose-400/50 rounded-2xl space-y-3 max-w-md mx-auto shadow-2xl">
-                <span className="text-xs uppercase tracking-widest text-amber-300 font-bold">
-                  Final Secret Note 💌
-                </span>
-                <p className="text-sm sm:text-base font-bold text-rose-100 italic leading-relaxed">
-                  "{currentSecretNote}"
-                </p>
-              </div>
-
-              <button
-                onClick={() => startLevel(1)}
-                className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-extrabold shadow-xl shadow-rose-500/30 hover:scale-105 transition-all text-sm sm:text-base inline-flex items-center gap-2"
-              >
-                <RotateCcw size={18} /> Play Game Again 🔄
-              </button>
-            </motion.div>
-          )}
-        </div>
-
-        {/* BACK TO HOME */}
-        <div>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-rose-300/80 hover:text-rose-100 text-sm font-semibold transition-colors"
-          >
-            ← Back to Surprise Home Page
-          </Link>
-        </div>
             </motion.div>
           )}
         </AnimatePresence>

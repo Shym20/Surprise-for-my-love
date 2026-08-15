@@ -263,7 +263,7 @@ export default function SurpriseBase() {
       category: "Fans's Love",
       tag: "Let Them Talk",
       date: "June 20, 2026",
-      note: "You wore what made I feel beautiful, and somehow that became everyone else's business. While some people chose to talk about the clothes, we were busy creating a memory — you surprising me and booking a private theatre for my birthday. 11 shares on our post, conversations all around the village, and everyone talking about our moment… maybe that's just another way of saying people couldn't stop noticing us. Let them talk — we were too busy living our story. ❤️",
+      note: "You wore what made me feel beautiful, and somehow, it became everyone else’s business. While some people were busy talking about the clothes, we were busy making memories — you surprising me and booking a private theatre just for my birthday. 11 shares, endless conversations around the village, and everyone having something to say about our moment… maybe that’s just proof that people couldn’t stop noticing us. Let them talk. Let them judge. We were too busy living, loving, and creating a story that belongs to us. ❤️",
       location: "Private Theatre",
       hearts: 222
     }
@@ -668,7 +668,7 @@ export default function SurpriseBase() {
                   animate={{ scale: 1, y: 0 }}
                   exit={{ scale: 0.9, y: 20 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="bg-slate-900 border border-rose-500/40 rounded-2xl sm:rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] shadow-2xl flex flex-col md:grid md:grid-cols-12 relative my-auto"
+                  className="bg-slate-900 border border-rose-500/40 rounded-2xl sm:rounded-3xl overflow-hidden max-w-4xl w-full max-h-[92vh] md:max-h-[85vh] md:h-[560px] shadow-2xl relative my-auto flex flex-col"
                 >
                   {/* Close Button - Sticky Top Right for Mobile & Desktop */}
                   <button
@@ -679,10 +679,10 @@ export default function SurpriseBase() {
                     <X size={20} />
                   </button>
 
-                  {/* Scrollable Container for Mobile */}
-                  <div className="w-full h-full overflow-y-auto flex flex-col md:grid md:grid-cols-12 md:col-span-12">
+                  {/* Modal Container */}
+                  <div className="w-full h-full flex flex-col md:grid md:grid-cols-12 overflow-y-auto md:overflow-hidden">
                     {/* Modal Image View */}
-                    <div className="md:col-span-7 bg-slate-950 relative min-h-[250px] sm:min-h-[380px] max-h-[45vh] md:max-h-none flex items-center justify-center overflow-hidden shrink-0">
+                    <div className="md:col-span-7 bg-slate-950 relative min-h-[220px] sm:min-h-[300px] max-h-[35vh] md:max-h-full md:h-full flex items-center justify-center overflow-hidden shrink-0">
                       <img
                         src={activeModalItem.image}
                         alt={activeModalItem.title}
@@ -699,18 +699,18 @@ export default function SurpriseBase() {
                       </div>
                     </div>
 
-                    {/* Modal Content Info */}
-                    <div className="md:col-span-5 p-5 sm:p-8 flex flex-col justify-between space-y-5 grow">
-                      <div className="space-y-3">
+                    {/* Modal Content Info - Scrollable */}
+                    <div className="md:col-span-5 p-4 sm:p-5 flex flex-col justify-between overflow-y-auto h-full bg-slate-900 space-y-4">
+                      <div className="space-y-2.5">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-semibold">
                           <Calendar size={13} /> {activeModalItem.date}
                         </div>
 
-                        <h2 className="text-xl sm:text-3xl font-extrabold text-rose-100">
+                        <h2 className="text-lg sm:text-2xl font-extrabold text-rose-100 leading-tight">
                           {activeModalItem.title}
                         </h2>
 
-                        <div className="p-3.5 rounded-xl bg-slate-950/60 border border-rose-500/20 space-y-1.5">
+                        <div className="p-3 rounded-xl bg-slate-950/60 border border-rose-500/20 space-y-1">
                           <span className="text-xs font-semibold text-rose-300 flex items-center gap-1">
                             <Quote size={14} /> Personal Note:
                           </span>
@@ -720,21 +720,21 @@ export default function SurpriseBase() {
                         </div>
                       </div>
 
-                      {/* Modal Action Controls */}
-                      <div className="space-y-3 pt-2">
+                      {/* Modal Action Controls - Always visible with bottom padding */}
+                      <div className="space-y-2.5 pt-2 pb-3 shrink-0">
                         <div className="flex items-center justify-between text-xs sm:text-sm text-rose-200">
                           <span>Total Love Reactions</span>
-                          <span className="font-bold text-rose-400 flex items-center gap-1 text-sm sm:text-base">
-                            <Heart fill="currentColor" size={16} />{" "}
+                          <span className="font-bold text-rose-400 flex items-center gap-1 text-xs sm:text-sm">
+                            <Heart fill="currentColor" size={15} />{" "}
                             {activeModalItem.hearts + (likesCount[activeModalItem.id] || 0)}
                           </span>
                         </div>
 
                         <button
                           onClick={() => handleLike(activeModalItem.id)}
-                          className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                          className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                         >
-                          <Heart fill="currentColor" size={18} /> Send Love & Confetti 🎉
+                          <Heart fill="currentColor" size={16} /> Send Love & Confetti 🎉
                         </button>
 
                         {/* Navigation between Modal items */}
@@ -748,7 +748,7 @@ export default function SurpriseBase() {
                                 (currentIndex - 1 + coupleMemories.length) % coupleMemories.length;
                               setActiveModalItem(coupleMemories[prevIndex]);
                             }}
-                            className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                            className="text-xs text-rose-300/80 hover:text-rose-100 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800 transition-colors"
                           >
                             <ChevronLeft size={14} /> Previous Memory
                           </button>
@@ -761,7 +761,7 @@ export default function SurpriseBase() {
                               const nextIndex = (currentIndex + 1) % coupleMemories.length;
                               setActiveModalItem(coupleMemories[nextIndex]);
                             }}
-                            className="text-xs text-rose-300/70 hover:text-rose-200 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800"
+                            className="text-xs text-rose-300/80 hover:text-rose-100 flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-slate-800 transition-colors"
                           >
                             Next Memory <ChevronRight size={14} />
                           </button>

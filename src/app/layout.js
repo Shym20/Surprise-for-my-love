@@ -1,7 +1,6 @@
-// "use client";
 import { Geist, Geist_Mono, Poppins, Noto_Serif } from "next/font/google";
 import "./globals.css";
-
+import BackgroundMusic from "./_components/BackgroundMusic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +44,7 @@ export default function RootLayout({ children }) {
         className={`${poppins.variable} ${notoSerif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <BackgroundMusic />
       </body>
     </html>
   );
